@@ -122,6 +122,28 @@ def test_agent_failure_uses_deterministic_fallback(caplog):
     assert "using fallback" in caplog.text
 
 
+def test_workflow_logs_safe_process_steps(caplog):
+    source, source_type = load_source(Path("data/security_requirements.txt"))
+    backlog = load_backlog(Path("data/existing_backlog.json"))
+
+    with caplog.at_level("INFO", logger="smart_backlog"):
+        proposal = asyncio.run(
+            SmartBacklogWorkflow("offline").run(
+                source, source_type, backlog
+            )
+        )
+
+    assert "workflow=smart_backlog status=started" in caplog.text
+    assert "step=1/5 agent=Orchestrator Agent" in caplog.text
+    assert "step=5/5 agent=Quality Reviewer Agent" in caplog.text
+    assert "tool=proposal_validation status=completed" in caplog.text
+    assert "execution=fallback" in caplog.text
+    assert "duration_ms=" in caplog.text
+    assert "tool_records=5" in caplog.text
+    assert source not in caplog.text
+    assert proposal.correlation_id in caplog.text
+
+
 def test_prompt_contract_is_grounded_and_schema_constrained():
     instructions = build_agent_instructions("backlog")
     prompt = build_stage_prompt(

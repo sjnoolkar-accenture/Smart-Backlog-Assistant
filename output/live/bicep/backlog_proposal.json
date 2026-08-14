@@ -1,5 +1,5 @@
 {
-  "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+  "correlation_id": "eb576a91-a564-4a46-b5d3-e2170441115e",
   "summary": "Identified 9 key requirements from the source.",
   "requirements": [
     {
@@ -249,35 +249,35 @@
   "approval_required": true,
   "tool_invocations": [
     {
-      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "correlation_id": "eb576a91-a564-4a46-b5d3-e2170441115e",
       "agent": "Orchestrator Agent",
       "tool": "request_inspection",
       "call_count": 1,
       "execution": "model"
     },
     {
-      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "correlation_id": "eb576a91-a564-4a46-b5d3-e2170441115e",
       "agent": "Requirements Analyst Agent",
       "tool": "source_reader",
       "call_count": 1,
       "execution": "model"
     },
     {
-      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "correlation_id": "eb576a91-a564-4a46-b5d3-e2170441115e",
       "agent": "Backlog Analyst Agent",
       "tool": "backlog_search",
       "call_count": 1,
       "execution": "model"
     },
     {
-      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "correlation_id": "eb576a91-a564-4a46-b5d3-e2170441115e",
       "agent": "Story Writer Agent",
       "tool": "story_context",
       "call_count": 1,
       "execution": "model"
     },
     {
-      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "correlation_id": "eb576a91-a564-4a46-b5d3-e2170441115e",
       "agent": "Quality Reviewer Agent",
       "tool": "proposal_validation",
       "call_count": 1,

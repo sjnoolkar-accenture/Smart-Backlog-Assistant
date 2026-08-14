@@ -59,7 +59,7 @@ The agents exchange compact structured summaries. Tools provide source evidence
 and validation results, while the agents interpret that information and prepare
 the proposal.
 
-See the [architecture diagram](docs/PROJECT_DESIGN.md#3-solution-architecture) for the
+See the [architecture diagram](docs/PROJECT_DESIGN.md#4-architecture) for the
 complete agent, tool, loader, logging, and output flow.
 
 ## MVP scope
@@ -114,6 +114,7 @@ propose three additional engineering stories.
 
 ## Documentation
 
+- [Approach, prompts, testing, and reflection](docs/PROJECT_DESIGN.md)
 - [Project design and examples](docs/PROJECT_DESIGN.md)
 - [Installation and running the application](docs/GETTING_STARTED.md)
 - [Low-level design and repository structure](docs/LOW_LEVEL_DESIGN.md)

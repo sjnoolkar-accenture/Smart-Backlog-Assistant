@@ -2,6 +2,7 @@
 
 import logging
 import re
+from time import perf_counter
 from typing import Any, Callable, Literal, TypeVar
 from uuid import uuid4
 
@@ -36,6 +37,48 @@ from .tools import (
 
 LOGGER = logging.getLogger("smart_backlog")
 T = TypeVar("T", bound=BaseModel)
+
+STAGE_SEQUENCE = {
+    "orchestrator": 1,
+    "requirements": 2,
+    "backlog": 3,
+    "writer": 4,
+    "reviewer": 5,
+}
+
+
+def stage_result_summary(result: BaseModel) -> str:
+    """Return safe process metrics without logging source or model content."""
+    if isinstance(result, WorkPlan):
+        return (
+            f"planned_stages={len(result.stages)} "
+            f"backlog_items={result.backlog_item_count}"
+        )
+    if isinstance(result, RequirementAnalysis):
+        return (
+            f"requirements={len(result.requirements)} "
+            f"assumptions={len(result.assumptions)}"
+        )
+    if isinstance(result, BacklogAnalysis):
+        return (
+            f"matches={len(result.matches)} "
+            f"gaps={len(result.gap_requirement_ids)}"
+        )
+    if isinstance(result, StoryDraft):
+        criteria_count = sum(
+            len(story.acceptance_criteria) for story in result.stories
+        )
+        return (
+            f"stories={len(result.stories)} "
+            f"acceptance_criteria={criteria_count}"
+        )
+    if isinstance(result, BacklogProposal):
+        return (
+            f"requirements={len(result.requirements)} "
+            f"stories={len(result.stories)} "
+            f"review_notes={len(result.review_notes)}"
+        )
+    return f"result_type={type(result).__name__}"
 
 
 def priority_for(text: str) -> Literal["High", "Medium", "Low"]:
@@ -358,7 +401,17 @@ class SmartBacklogWorkflow:
         tool: RequiredToolBinding,
         fallback: Callable[[BaseModel], T],
     ) -> T:
-        LOGGER.info("Starting %s agent (%s mode)", name, self.mode)
+        sequence = STAGE_SEQUENCE[name]
+        started = perf_counter()
+        LOGGER.info(
+            "PROCESS correlation_id=%s step=%d/5 agent=%s tool=%s "
+            "status=started mode=%s",
+            self.correlation_id,
+            sequence,
+            self.AGENT_NAMES[name],
+            tool.name,
+            self.mode,
+        )
         execution: Literal["model", "fallback"] = "fallback"
         if self.runner:
             try:
@@ -366,7 +419,6 @@ class SmartBacklogWorkflow:
                     name, evidence, model_type, tool
                 )
                 execution = "model"
-                LOGGER.info("Completed %s agent", name)
             except (
                 TimeoutError,
                 ValueError,
@@ -374,7 +426,14 @@ class SmartBacklogWorkflow:
                 RuntimeError,
             ) as exc:
                 LOGGER.warning(
-                    "%s agent failed; using fallback: %s", name, exc
+                    "PROCESS correlation_id=%s step=%d/5 agent=%s tool=%s "
+                    "status=model_failed error_type=%s; using fallback: %s",
+                    self.correlation_id,
+                    sequence,
+                    self.AGENT_NAMES[name],
+                    tool.name,
+                    type(exc).__name__,
+                    exc,
                 )
                 try:
                     tool_value = tool.ensure_called()
@@ -383,8 +442,6 @@ class SmartBacklogWorkflow:
                 result = fallback(tool_value)
         else:
             result = fallback(tool.ensure_called())
-        if execution == "fallback":
-            LOGGER.info("Completed %s deterministic fallback", name)
         self.tool_invocations.append(
             ToolInvocationRecord(
                 agent=self.AGENT_NAMES[name],
@@ -393,6 +450,19 @@ class SmartBacklogWorkflow:
                 call_count=tool.call_count,
                 execution=execution,
             )
+        )
+        duration_ms = max(0, round((perf_counter() - started) * 1000))
+        LOGGER.info(
+            "PROCESS correlation_id=%s step=%d/5 agent=%s tool=%s "
+            "status=completed execution=%s call_count=%d duration_ms=%d %s",
+            self.correlation_id,
+            sequence,
+            self.AGENT_NAMES[name],
+            tool.name,
+            execution,
+            tool.call_count,
+            duration_ms,
+            stage_result_summary(result),
         )
         return result
 
@@ -404,7 +474,17 @@ class SmartBacklogWorkflow:
     ) -> BacklogProposal:
         self.tool_invocations = []
         self.correlation_id = str(uuid4())
-        LOGGER.info("Workflow %s started", self.correlation_id)
+        workflow_started = perf_counter()
+        LOGGER.info(
+            "PROCESS correlation_id=%s workflow=smart_backlog "
+            "status=started mode=%s source_type=%s source_chars=%d "
+            "backlog_items=%d",
+            self.correlation_id,
+            self.mode,
+            source_type,
+            len(source),
+            len(backlog),
+        )
         request_tool = RequiredToolBinding(
             "request_inspection",
             "Inspect the request and return the authoritative stage plan.",
@@ -516,7 +596,20 @@ class SmartBacklogWorkflow:
             result = validator.enforce(
                 proposal, requirements, analysis, backlog
             )
-            LOGGER.info("Workflow %s completed", self.correlation_id)
+            duration_ms = max(
+                0, round((perf_counter() - workflow_started) * 1000)
+            )
+            LOGGER.info(
+                "PROCESS correlation_id=%s workflow=smart_backlog "
+                "status=completed execution=%s duration_ms=%d "
+                "requirements=%d stories=%d tool_records=%d",
+                self.correlation_id,
+                self.mode,
+                duration_ms,
+                len(result.requirements),
+                len(result.stories),
+                len(result.tool_invocations),
+            )
             return result
         except ProposalGuardrailError as exc:
             if self.mode != "live":
@@ -550,7 +643,13 @@ class SmartBacklogWorkflow:
                 backlog,
             )
             LOGGER.info(
-                "Workflow %s completed with validated fallback",
+                "PROCESS correlation_id=%s workflow=smart_backlog "
+                "status=completed execution=validated_fallback "
+                "duration_ms=%d requirements=%d stories=%d tool_records=%d",
                 self.correlation_id,
+                max(0, round((perf_counter() - workflow_started) * 1000)),
+                len(result.requirements),
+                len(result.stories),
+                len(result.tool_invocations),
             )
             return result

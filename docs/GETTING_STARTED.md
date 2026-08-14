@@ -187,9 +187,19 @@ LOG_MAX_BYTES=1048576
 LOG_BACKUP_COUNT=3
 ```
 
-Each workflow logs its correlation identifier, agent-stage progress, fallback
-decisions, validation failures, and written output paths. Provider credentials
-are not written to the application log.
+Each workflow writes a safe process trail containing:
+
+- workflow start and completion;
+- correlation identifier and execution mode;
+- all five ordered agent steps;
+- assigned tool and exactly-once call count;
+- model or fallback execution;
+- stage and workflow duration;
+- requirement, match, gap, story, and validation counts;
+- validation failures and written output paths.
+
+Source text, model responses, tool payloads, and provider credentials are not
+written to the application log.
 
 ## Command help
 
