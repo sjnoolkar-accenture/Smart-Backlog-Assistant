@@ -1,0 +1,333 @@
+{
+  "correlation_id": "5113f607-33c5-4d7f-94eb-5da7f15a0ad0",
+  "summary": "Identified 10 key requirements from the source.",
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "statement": "The Inventory Application must be upgraded from Angular 9 to Angular 15",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Application Modernization",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-002",
+      "statement": "The team needs to update related Angular dependencies, resolve compatibility issues, and confirm that existing inventory workflows continue to work",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Application Modernization",
+      "priority": "Medium",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-003",
+      "statement": "The Azure infrastructure should be defined using reusable Bicep templates",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Infrastructure",
+      "priority": "Medium",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-004",
+      "statement": "The templates must support development, test, and production environments without duplicating the complete infrastructure definition",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Infrastructure",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-005",
+      "statement": "Each environment must define its Azure region and SKU size through configuration",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Feature",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-006",
+      "statement": "The project needs automated build and release pipelines",
+      "rationale": "Identified directly from the supplied source",
+      "category": "DevOps",
+      "priority": "Medium",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-007",
+      "statement": "Each change should build the application, run automated tests, publish a versioned artifact, and deploy through controlled environments",
+      "rationale": "Identified directly from the supplied source",
+      "category": "DevOps",
+      "priority": "Medium",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-008",
+      "statement": "Production deployment must require approval",
+      "rationale": "Identified directly from the supplied source",
+      "category": "DevOps",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-009",
+      "statement": "The team should add unit, integration, and end-to-end tests for critical inventory workflows",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Testing",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-010",
+      "statement": "Test failures must stop the build and prevent deployment",
+      "rationale": "Identified directly from the supplied source",
+      "category": "DevOps",
+      "priority": "High",
+      "source_locations": []
+    }
+  ],
+  "key_requirements": [
+    "The Inventory Application must be upgraded from Angular 9 to Angular 15",
+    "The team needs to update related Angular dependencies, resolve compatibility issues, and confirm that existing inventory workflows continue to work",
+    "The Azure infrastructure should be defined using reusable Bicep templates",
+    "The templates must support development, test, and production environments without duplicating the complete infrastructure definition",
+    "Each environment must define its Azure region and SKU size through configuration",
+    "The project needs automated build and release pipelines",
+    "Each change should build the application, run automated tests, publish a versioned artifact, and deploy through controlled environments",
+    "Production deployment must require approval",
+    "The team should add unit, integration, and end-to-end tests for critical inventory workflows",
+    "Test failures must stop the build and prevent deployment"
+  ],
+  "stories": [
+    {
+      "id": "STORY-001",
+      "title": "The Inventory Application must be upgraded from Angular 9 to Angular 15",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The Inventory Application must be upgraded from Angular 9 to Angular 15, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The Inventory Application must be upgraded from Angular 9 to Angular 15.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "Application Modernization",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "related_backlog_ids": [
+        "BL-201"
+      ],
+      "backlog_relationships": [
+        {
+          "requirement_id": "REQ-001",
+          "backlog_id": "BL-201",
+          "relationship": "duplicate",
+          "rationale": "Token overlap score 0.33",
+          "recommended_action": "reuse_existing"
+        }
+      ],
+      "recommended_action": "reuse_existing"
+    },
+    {
+      "id": "STORY-002",
+      "title": "The team needs to update related Angular dependencies, resolve compatibility issues,...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The team needs to update related Angular dependencies, resolve compatibility issues, and confirm that existing inventory workflows continue to work, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The team needs to update related Angular dependencies, resolve compatibility issues, and confirm that existing inventory workflows continue to work.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "Application Modernization",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "related_backlog_ids": [
+        "BL-201"
+      ],
+      "backlog_relationships": [
+        {
+          "requirement_id": "REQ-002",
+          "backlog_id": "BL-201",
+          "relationship": "duplicate",
+          "rationale": "Token overlap score 0.60",
+          "recommended_action": "reuse_existing"
+        }
+      ],
+      "recommended_action": "reuse_existing"
+    },
+    {
+      "id": "STORY-003",
+      "title": "The Azure infrastructure should be defined using reusable Bicep templates",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The Azure infrastructure should be defined using reusable Bicep templates, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The Azure infrastructure should be defined using reusable Bicep templates.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "Infrastructure",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-004",
+      "title": "The templates must support development, test, and production environments without...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The templates must support development, test, and production environments without duplicating the complete infrastructure definition, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The templates must support development, test, and production environments without duplicating the complete infrastructure definition.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "Infrastructure",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-005",
+      "title": "Each environment must define its Azure region and SKU size through configuration",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Each environment must define its Azure region and SKU size through configuration, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Each environment must define its Azure region and SKU size through configuration.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "Feature",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-006",
+      "title": "The project needs automated build and release pipelines",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The project needs automated build and release pipelines, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The project needs automated build and release pipelines.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "DevOps",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-007",
+      "title": "Each change should build the application, run automated tests, publish a versioned...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Each change should build the application, run automated tests, publish a versioned artifact, and deploy through controlled environments, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Each change should build the application, run automated tests, publish a versioned artifact, and deploy through controlled environments.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "DevOps",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-008",
+      "title": "Production deployment must require approval",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Production deployment must require approval, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Production deployment must require approval.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "DevOps",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-009",
+      "title": "The team should add unit, integration, and end-to-end tests for critical inventory...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The team should add unit, integration, and end-to-end tests for critical inventory workflows, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The team should add unit, integration, and end-to-end tests for critical inventory workflows.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "Testing",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-010",
+      "title": "Test failures must stop the build and prevent deployment",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Test failures must stop the build and prevent deployment, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Test failures must stop the build and prevent deployment.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "DevOps",
+      "requirement_ids": [
+        "REQ-010"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    }
+  ],
+  "assumptions": [],
+  "review_notes": [
+    "Proposal passed deterministic structure checks.",
+    "AI output failed guardrails; a deterministic validated proposal was used."
+  ],
+  "approval_required": true,
+  "tool_invocations": [
+    {
+      "correlation_id": "5113f607-33c5-4d7f-94eb-5da7f15a0ad0",
+      "agent": "Orchestrator Agent",
+      "tool": "request_inspection",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "5113f607-33c5-4d7f-94eb-5da7f15a0ad0",
+      "agent": "Requirements Analyst Agent",
+      "tool": "source_reader",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "5113f607-33c5-4d7f-94eb-5da7f15a0ad0",
+      "agent": "Backlog Analyst Agent",
+      "tool": "backlog_search",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "5113f607-33c5-4d7f-94eb-5da7f15a0ad0",
+      "agent": "Story Writer Agent",
+      "tool": "story_context",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "5113f607-33c5-4d7f-94eb-5da7f15a0ad0",
+      "agent": "Quality Reviewer Agent",
+      "tool": "proposal_validation",
+      "call_count": 1,
+      "execution": "model"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+The administration portal must restrict configuration changes to authorized
+administrators. Every configuration change must be written to an audit log with
+the user, timestamp, previous value, and new value.
+
+The system should alert the operations team after five failed sign-in attempts
+for the same account within ten minutes. Audit records must be retained for one
+year and must not contain access tokens or passwords.

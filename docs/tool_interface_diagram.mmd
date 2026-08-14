@@ -1,0 +1,146 @@
+classDiagram
+    class RequestInspectionTool {
+        <<interface>>
+        purpose: Validate and classify the incoming request
+    }
+    class RequestInspectionInput {
+        correlationIdentifier
+        sourceFormat
+        backlogItemCount
+    }
+    class RequestInspectionOutput {
+        requestClassification
+        validSource
+        availableBacklog
+        requiredStages
+        processingGuidance
+        warnings
+    }
+    RequestInspectionTool --> RequestInspectionInput : accepts
+    RequestInspectionTool --> RequestInspectionOutput : returns
+
+    class SourceReaderTool {
+        <<interface>>
+        purpose: Return grounded sections from the supplied source
+    }
+    class SourceReaderInput {
+        correlationIdentifier
+        sourceName
+        sourceFormat
+        sourceText
+    }
+    class SourceReaderOutput {
+        sourceName
+        sourceFormat
+        sections
+        contentComplete
+        warnings
+    }
+    class SourceSection {
+        sectionIdentifier
+        sectionText
+        location
+    }
+    SourceReaderTool --> SourceReaderInput : accepts
+    SourceReaderTool --> SourceReaderOutput : returns
+    SourceReaderOutput "1" *-- "many" SourceSection : contains
+
+    class BacklogSearchTool {
+        <<interface>>
+        purpose: Find existing backlog items related to requirements
+    }
+    class BacklogSearchInput {
+        correlationIdentifier
+        confirmedRequirements
+        existingBacklogItems
+        maximumResults
+    }
+    class BacklogSearchOutput {
+        candidates
+        noMatchRequirementIdentifiers
+    }
+    class BacklogCandidate {
+        backlogIdentifier
+        title
+        description
+        status
+        priority
+        category
+        relevanceEvidence
+        relevanceScore
+    }
+    BacklogSearchTool --> BacklogSearchInput : accepts
+    BacklogSearchTool --> BacklogSearchOutput : returns
+    BacklogSearchOutput "1" *-- "many" BacklogCandidate : contains
+
+    class StoryContextTool {
+        <<interface>>
+        purpose: Prepare grounded context for proposed stories
+    }
+    class StoryContextInput {
+        correlationIdentifier
+        confirmedRequirements
+        backlogAnalysis
+    }
+    class StoryContextOutput {
+        requirementContexts
+    }
+    class RequirementContext {
+        requirementIdentifier
+        requirementStatement
+        rationale
+        sourceLocations
+        constraints
+        suggestedPriority
+        suggestedCategory
+        relatedBacklogItems
+        assumptions
+    }
+    StoryContextTool --> StoryContextInput : accepts
+    StoryContextTool --> StoryContextOutput : returns
+    StoryContextOutput "1" *-- "many" RequirementContext : contains
+
+    class ProposalValidationTool {
+        <<interface>>
+        purpose: Enforce proposal quality and safety guardrails
+    }
+    class ProposalValidationInput {
+        correlationIdentifier
+        confirmedRequirements
+        backlogAnalysis
+        proposedStories
+        existingBacklogItems
+        toolInvocationAudit
+    }
+    class ProposalValidationOutput {
+        overallResult
+        findings
+        validStoryCount
+    }
+    class ValidationFinding {
+        severity
+        findingCategory
+        affectedStory
+        explanation
+    }
+    ProposalValidationTool --> ProposalValidationInput : accepts
+    ProposalValidationTool --> ProposalValidationOutput : returns
+    ProposalValidationOutput "1" *-- "many" ValidationFinding : contains
+
+    class BacklogPublishingTool {
+        <<interface>>
+        purpose: Publish approved items to the target backlog
+    }
+    class PublishingInput {
+        approvedProposal
+        approverIdentity
+        approvalTime
+        targetBacklog
+        confirmedItems
+    }
+    class PublishingOutput {
+        createdOrUpdatedIdentifiers
+        auditRecord
+    }
+    BacklogPublishingTool --> PublishingInput : accepts after approval
+    BacklogPublishingTool --> PublishingOutput : returns

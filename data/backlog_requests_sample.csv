@@ -1,0 +1,41 @@
+request_id,scenario,request_type,source_file,backlog_file,expected_actions,expected_backlog_ids,expected_categories,output_directory,request
+REQ-001,meeting-modernization,meeting_notes,meeting_notes.txt,existing_backlog.json,reuse_existing;create_new,BL-201,Application Modernization;Infrastructure;DevOps;Testing,output/meeting,"Inventory Application Modernization Planning
+
+The Inventory Application must be upgraded from Angular 9 to Angular 15.
+The team needs to update related Angular dependencies, resolve compatibility issues, and confirm that existing inventory workflows continue to work.
+
+The Azure infrastructure should be defined using reusable Bicep templates.
+The templates must support development, test, and production environments without duplicating the complete infrastructure definition. Each environment must define its Azure region and SKU size through configuration.
+
+The project needs automated build and release pipelines. Each change should build the application, run automated tests, publish a versioned artifact, and deploy through controlled environments. Production deployment must require approval.
+
+The team should add unit, integration, and end-to-end tests for critical inventory workflows. Test failures must stop the build and prevent deployment."
+REQ-002,bicep-infrastructure,requirement_document,bicep_requirements.txt,existing_backlog.json,create_new,,Infrastructure;Reliability,output/bicep,"Inventory Application Azure Infrastructure Requirements
+
+The Inventory Application infrastructure must be deployed in Azure using reusable Bicep templates.
+
+The same templates must support development, test, and production environments without duplicating the complete infrastructure definition. Each environment must provide its Azure region and SKU size through configuration.
+
+Development should use the East US region with a cost-efficient SKU. Test should use the East US 2 region with a medium SKU. Production should use the Central US region with a production-capable SKU.
+
+Deployment failures must be reported clearly. A failed deployment must not leave partially configured resources, and repeated deployment with the same configuration must not create duplicate resources.
+
+The deployment result should identify the environment, Azure region, selected SKU, created resources, and any warnings."
+REQ-003,modernization-extension,backlog_comparison,proposed_modernization_extension.txt,existing_backlog.json,extend_existing,BL-201,Application Modernization;Testing,output/modernization,"Proposed Inventory Application Modernization Extension
+
+Extend the existing Inventory Application Angular 15 upgrade to include automated bundle-size analysis, WCAG accessibility checks, and Node.js 20 build compatibility.
+
+The build should fail when the production bundle exceeds the agreed size limit or when critical accessibility violations are detected. Existing inventory workflows must continue to pass regression testing."
+REQ-004,pipeline-no-match,backlog_comparison,proposed_pipeline_requirement.txt,existing_backlog.json,create_new,,DevOps;Testing,output/pipeline,"Proposed Build and Release Pipeline Requirement
+
+Create an automated build and release pipeline for the Inventory Application.
+
+Every source change must restore dependencies, build the Angular application, run unit and integration tests, and publish a versioned deployment artifact. Test failures must stop the pipeline.
+
+The release process must deploy the same approved artifact to development, test, and production. Production deployment must require approval and retain the deployment history."
+REQ-005,security-controls,requirement_document,security_requirements.txt,existing_backlog.json,create_new,,Security,output/security,"The administration portal must restrict configuration changes to authorized administrators. Every configuration change must be written to an audit log with the user, timestamp, previous value, and new value.
+
+The system should alert the operations team after five failed sign-in attempts for the same account within ten minutes. Audit records must be retained for one year and must not contain access tokens or passwords."
+REQ-006,platform-health,requirement_document,platform_requirements.txt,existing_backlog.json,create_new,,Operations;Reliability,output/platform,"Engineering teams need a dashboard that summarizes deployment health across services. The dashboard should show the latest deployment status, active incidents, and failed health checks.
+
+Service owners should be able to filter by environment and owning team. The dashboard should display current information within two minutes of a deployment event. If a data source is unavailable, the dashboard must show the source as unavailable instead of displaying stale data as current."

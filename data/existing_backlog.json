@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "id": "BL-201",
+      "title": "Upgrade the Inventory Application from Angular 9 to Angular 15",
+      "description": "Upgrade Angular and related dependencies, resolve compatibility issues, and confirm that existing inventory features continue to work.",
+      "status": "Active",
+      "priority": "High",
+      "category": "Application Modernization"
+    }
+  ]
+}

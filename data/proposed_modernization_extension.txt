@@ -1,0 +1,9 @@
+Proposed Inventory Application Modernization Extension
+
+Extend the existing Inventory Application Angular 15 upgrade to include
+automated bundle-size analysis, WCAG accessibility checks, and Node.js 20 build
+compatibility.
+
+The build should fail when the production bundle exceeds the agreed size limit
+or when critical accessibility violations are detected. Existing inventory
+workflows must continue to pass regression testing.

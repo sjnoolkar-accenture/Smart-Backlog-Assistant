@@ -1,0 +1,287 @@
+{
+  "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+  "summary": "Identified 9 key requirements from the source.",
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "statement": "The Inventory Application infrastructure must be deployed in Azure using reusable Bicep templates",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Infrastructure",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-002",
+      "statement": "The same templates must support development, test, and production environments without duplicating the complete infrastructure definition",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Infrastructure",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-003",
+      "statement": "Each environment must provide its Azure region and SKU size through configuration",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Feature",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-004",
+      "statement": "Development should use the East US region with a cost-efficient SKU",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Feature",
+      "priority": "Medium",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-005",
+      "statement": "Test should use the East US 2 region with a medium SKU",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Feature",
+      "priority": "Medium",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-006",
+      "statement": "Production should use the Central US region with a production-capable SKU",
+      "rationale": "Identified directly from the supplied source",
+      "category": "Feature",
+      "priority": "Medium",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-007",
+      "statement": "Deployment failures must be reported clearly",
+      "rationale": "Identified directly from the supplied source",
+      "category": "DevOps",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-008",
+      "statement": "A failed deployment must not leave partially configured resources, and repeated deployment with the same configuration must not create duplicate resources",
+      "rationale": "Identified directly from the supplied source",
+      "category": "DevOps",
+      "priority": "High",
+      "source_locations": []
+    },
+    {
+      "id": "REQ-009",
+      "statement": "The deployment result should identify the environment, Azure region, selected SKU, created resources, and any warnings",
+      "rationale": "Identified directly from the supplied source",
+      "category": "DevOps",
+      "priority": "Medium",
+      "source_locations": []
+    }
+  ],
+  "key_requirements": [
+    "The Inventory Application infrastructure must be deployed in Azure using reusable Bicep templates",
+    "The same templates must support development, test, and production environments without duplicating the complete infrastructure definition",
+    "Each environment must provide its Azure region and SKU size through configuration",
+    "Development should use the East US region with a cost-efficient SKU",
+    "Test should use the East US 2 region with a medium SKU",
+    "Production should use the Central US region with a production-capable SKU",
+    "Deployment failures must be reported clearly",
+    "A failed deployment must not leave partially configured resources, and repeated deployment with the same configuration must not create duplicate resources",
+    "The deployment result should identify the environment, Azure region, selected SKU, created resources, and any warnings"
+  ],
+  "stories": [
+    {
+      "id": "STORY-001",
+      "title": "The Inventory Application infrastructure must be deployed in Azure using reusable...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The Inventory Application infrastructure must be deployed in Azure using reusable Bicep templates, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The Inventory Application infrastructure must be deployed in Azure using reusable Bicep templates.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "Infrastructure",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-002",
+      "title": "The same templates must support development, test, and production environments without...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The same templates must support development, test, and production environments without duplicating the complete infrastructure definition, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The same templates must support development, test, and production environments without duplicating the complete infrastructure definition.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "Infrastructure",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-003",
+      "title": "Each environment must provide its Azure region and SKU size through configuration",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Each environment must provide its Azure region and SKU size through configuration, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Each environment must provide its Azure region and SKU size through configuration.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "Feature",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-004",
+      "title": "Development should use the East US region with a cost-efficient SKU",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Development should use the East US region with a cost-efficient SKU, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Development should use the East US region with a cost-efficient SKU.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "Feature",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-005",
+      "title": "Test should use the East US 2 region with a medium SKU",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Test should use the East US 2 region with a medium SKU, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Test should use the East US 2 region with a medium SKU.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "Feature",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-006",
+      "title": "Production should use the Central US region with a production-capable SKU",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Production should use the Central US region with a production-capable SKU, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Production should use the Central US region with a production-capable SKU.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "Feature",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-007",
+      "title": "Deployment failures must be reported clearly",
+      "description": "As an engineering team, we want the product to satisfy this requirement: Deployment failures must be reported clearly, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: Deployment failures must be reported clearly.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "DevOps",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-008",
+      "title": "A failed deployment must not leave partially configured resources, and repeated...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: A failed deployment must not leave partially configured resources, and repeated deployment with the same configuration must not create duplicate resources, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: A failed deployment must not leave partially configured resources, and repeated deployment with the same configuration must not create duplicate resources.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "High",
+      "category": "DevOps",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    },
+    {
+      "id": "STORY-009",
+      "title": "The deployment result should identify the environment, Azure region, selected SKU,...",
+      "description": "As an engineering team, we want the product to satisfy this requirement: The deployment result should identify the environment, Azure region, selected SKU, created resources, and any warnings, so that the identified user or operational need is addressed.",
+      "acceptance_criteria": [
+        "Given the required inputs are available, when the feature is used, then it satisfies: The deployment result should identify the environment, Azure region, selected SKU, created resources, and any warnings.",
+        "Errors are reported clearly without producing partial results."
+      ],
+      "priority": "Medium",
+      "category": "DevOps",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "related_backlog_ids": [],
+      "backlog_relationships": [],
+      "recommended_action": "create_new"
+    }
+  ],
+  "assumptions": [],
+  "review_notes": [
+    "Proposal passed deterministic structure checks.",
+    "AI output failed guardrails; a deterministic validated proposal was used."
+  ],
+  "approval_required": true,
+  "tool_invocations": [
+    {
+      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "agent": "Orchestrator Agent",
+      "tool": "request_inspection",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "agent": "Requirements Analyst Agent",
+      "tool": "source_reader",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "agent": "Backlog Analyst Agent",
+      "tool": "backlog_search",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "agent": "Story Writer Agent",
+      "tool": "story_context",
+      "call_count": 1,
+      "execution": "model"
+    },
+    {
+      "correlation_id": "d90d1b82-d4f0-49ec-9101-eb783cea613c",
+      "agent": "Quality Reviewer Agent",
+      "tool": "proposal_validation",
+      "call_count": 1,
+      "execution": "model"
+    }
+  ]
+}

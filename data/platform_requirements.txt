@@ -1,0 +1,8 @@
+Engineering teams need a dashboard that summarizes deployment health across
+services. The dashboard should show the latest deployment status, active
+incidents, and failed health checks.
+
+Service owners should be able to filter by environment and owning team. The
+dashboard should display current information within two minutes of a deployment
+event. If a data source is unavailable, the dashboard must show the source as
+unavailable instead of displaying stale data as current.

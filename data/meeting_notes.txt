@@ -1,0 +1,18 @@
+Inventory Application Modernization Planning
+
+The Inventory Application must be upgraded from Angular 9 to Angular 15.
+The team needs to update related Angular dependencies, resolve compatibility
+issues, and confirm that existing inventory workflows continue to work.
+
+The Azure infrastructure should be defined using reusable Bicep templates.
+The templates must support development, test, and production environments
+without duplicating the complete infrastructure definition. Each environment
+must define its Azure region and SKU size through configuration.
+
+The project needs automated build and release pipelines. Each change should
+build the application, run automated tests, publish a versioned artifact, and
+deploy through controlled environments. Production deployment must require
+approval.
+
+The team should add unit, integration, and end-to-end tests for critical
+inventory workflows. Test failures must stop the build and prevent deployment.

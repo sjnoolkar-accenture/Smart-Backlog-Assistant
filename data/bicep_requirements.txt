@@ -1,0 +1,19 @@
+Inventory Application Azure Infrastructure Requirements
+
+The Inventory Application infrastructure must be deployed in Azure using
+reusable Bicep templates.
+
+The same templates must support development, test, and production environments
+without duplicating the complete infrastructure definition. Each environment
+must provide its Azure region and SKU size through configuration.
+
+Development should use the East US region with a cost-efficient SKU. Test
+should use the East US 2 region with a medium SKU. Production should use the
+Central US region with a production-capable SKU.
+
+Deployment failures must be reported clearly. A failed deployment must not
+leave partially configured resources, and repeated deployment with the same
+configuration must not create duplicate resources.
+
+The deployment result should identify the environment, Azure region, selected
+SKU, created resources, and any warnings.

@@ -1,0 +1,11 @@
+Proposed Build and Release Pipeline Requirement
+
+Create an automated build and release pipeline for the Inventory Application.
+
+Every source change must restore dependencies, build the Angular application,
+run unit and integration tests, and publish a versioned deployment artifact.
+Test failures must stop the pipeline.
+
+The release process must deploy the same approved artifact to development,
+test, and production. Production deployment must require approval and retain
+the deployment history.

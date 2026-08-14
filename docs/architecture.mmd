@@ -1,0 +1,57 @@
+flowchart LR
+    subgraph Inputs
+        M[Meeting notes]
+        D[Requirement text or PDF]
+        B[Existing backlog JSON]
+    end
+
+    subgraph Loaders["Deterministic loaders"]
+        L[Document Loader]
+        BL[Backlog Loader]
+    end
+
+    subgraph Tools["Controlled tools"]
+        RI[Request Inspection Tool]
+        SR[Source Reader Tool]
+        BS[Backlog Search Tool]
+        SC[Story Context Tool]
+        PV[Proposal Validation Tool]
+    end
+
+    subgraph AI["AI agent layer - Microsoft Agent Framework"]
+        O["Orchestrator Agent<br/>[AI Model]"]
+        R["Requirements Analyst Agent<br/>[AI Model]"]
+        A["Backlog Analyst Agent<br/>[AI Model]"]
+        S["Story Writer Agent<br/>[AI Model]"]
+        Q["Quality Reviewer Agent<br/>[AI Model]"]
+    end
+
+    subgraph Outputs
+        J[Structured JSON proposal]
+        MD[Readable Markdown proposal]
+        H[Human review]
+        LOG[Rotating runtime log]
+    end
+
+    M --> L
+    D --> L
+    B --> BL
+    L --> O
+    BL --> O
+
+    O --> R
+    R --> A
+    A --> S
+    S --> Q
+
+    O -. calls .-> RI
+    R -. calls .-> SR
+    A -. calls .-> BS
+    S -. calls .-> SC
+    Q -. calls .-> PV
+
+    PV --> J
+    PV -. workflow events .-> LOG
+    J --> MD
+    J --> H
+    MD --> H
