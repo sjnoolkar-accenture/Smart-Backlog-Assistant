@@ -59,7 +59,8 @@ The agents exchange compact structured summaries. Tools provide source evidence
 and validation results, while the agents interpret that information and prepare
 the proposal.
 
-![Smart Backlog Assistant architecture](docs/architecture.png)
+See the [architecture diagram](docs/PROJECT_DESIGN.md#architecture) for the
+complete agent, tool, loader, logging, and output flow.
 
 ## MVP scope
 
