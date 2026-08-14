@@ -431,7 +431,7 @@ interpretation and generation.
 ![Smart Backlog Assistant architecture](architecture.png)
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph Inputs
         M[Meeting notes]
         D[Requirement text or PDF]
