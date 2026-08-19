@@ -143,3 +143,4 @@ propose three additional engineering stories.
 - [Tool interfaces and diagram](docs/TOOL_INTERFACES.md)
 - [Tool interface diagram image](docs/tool_interface_diagram.png)
 - [Testing approach](docs/TESTING.md)
+- [AI-native system design interview guide](docs/AI_NATIVE_SYSTEM_DESIGN_INTERVIEW_GUIDE.md)
