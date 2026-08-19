@@ -532,6 +532,40 @@ The manual review should verify:
 - human approval remains mandatory;
 - the existing backlog remains unchanged.
 
+### 8.4 Reproducible Alignment Verification
+
+Run one PowerShell command to verify the specification, implementation, tests,
+report, and runtime behavior together:
+
+```powershell
+& .\.specify\scripts\powershell\verify-alignment.ps1
+```
+
+The command verifies:
+
+- FR-001 through FR-024 exist exactly once in the specification;
+- every requirement has a traceability-matrix row and automated test evidence;
+- every test referenced by the matrix exists;
+- no as-built Spec Kit task is incomplete;
+- report-local hyperlinks resolve;
+- report requirement and test counts match the repository;
+- the documented five workflow stages and prompt tags exist in code;
+- story category and priority enums match the external output schema;
+- human approval and five tool records remain part of the output contract;
+- the complete pytest suite passes;
+- an offline end-to-end run creates JSON and Markdown output, includes source
+  locations and five tool records, requires approval, and leaves the backlog
+  unchanged.
+
+Successful verification ends with:
+
+```text
+ALIGNMENT_OK ...
+32 passed
+SMOKE_OK ...
+VERIFICATION_COMPLETE all alignment checks passed.
+```
+
 ## 9. Test Data and Evaluation
 
 The test-data design separates agent input from reviewer-only expected results.

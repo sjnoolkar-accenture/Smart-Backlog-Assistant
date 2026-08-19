@@ -9,6 +9,8 @@ $featureRoot = Join-Path $repoRoot "specs\$Feature"
 
 $requiredFiles = @(
     ".specify\memory\constitution.md",
+    ".specify\scripts\powershell\verify-alignment.ps1",
+    "scripts\verify_alignment.py",
     "specs\$Feature\spec.md",
     "specs\$Feature\plan.md",
     "specs\$Feature\research.md",
