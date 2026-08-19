@@ -114,6 +114,7 @@ propose three additional engineering stories.
 
 ## Documentation
 
+- [AI-native SDLC project report](docs/AI_NATIVE_SDLC_PROJECT_REPORT.md)
 - [Approach, prompts, testing, and reflection](docs/PROJECT_DESIGN.md)
 - [Project design and examples](docs/PROJECT_DESIGN.md)
 - [Installation and running the application](docs/GETTING_STARTED.md)
