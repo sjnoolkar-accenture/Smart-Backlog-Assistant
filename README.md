@@ -27,6 +27,25 @@ The [low-level design and repository structure](docs/LOW_LEVEL_DESIGN.md)
 explains exactly which files are agent inputs, reviewer-only references, and
 generated outputs.
 
+## Specification-first development
+
+Application design started with
+[GitHub Spec Kit](https://github.com/github/spec-kit), not with an existing
+implementation. The [constitution](.specify/memory/constitution.md),
+[feature specification](specs/001-smart-backlog-assistant/spec.md),
+[research decisions](specs/001-smart-backlog-assistant/research.md),
+[implementation plan](specs/001-smart-backlog-assistant/plan.md), contracts,
+and [task plan](specs/001-smart-backlog-assistant/tasks.md) defined the
+requirements, architecture, quality gates, and implementation sequence before
+the code was developed.
+
+Run the repository alignment gate to verify the specification, code, tests,
+report, and offline runtime behavior together:
+
+```powershell
+& .\.specify\scripts\powershell\verify-alignment.ps1
+```
+
 ## Install and run
 
 ```powershell
@@ -116,7 +135,7 @@ propose three additional engineering stories.
 
 - [AI-native SDLC project report](docs/AI_NATIVE_SDLC_PROJECT_REPORT.md)
 - [Approach, prompts, testing, and reflection](docs/PROJECT_DESIGN.md)
-- [Project design and examples](docs/PROJECT_DESIGN.md)
+- [Specification and implementation plan](specs/001-smart-backlog-assistant/)
 - [Installation and running the application](docs/GETTING_STARTED.md)
 - [Low-level design and repository structure](docs/LOW_LEVEL_DESIGN.md)
 - [Practical prompt engineering](docs/PROMPT_ENGINEERING.md)
