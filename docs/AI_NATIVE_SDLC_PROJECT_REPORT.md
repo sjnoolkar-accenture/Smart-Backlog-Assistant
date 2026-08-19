@@ -81,8 +81,12 @@ timeouts.
 
 ## 3. Specification-Driven Development
 
-The project uses a Spec Kit-style artifact chain rather than moving directly
-from a prompt to code.
+The application design started with a Spec Kit-style artifact chain rather
+than moving directly from a prompt to code. The constitution, feature
+specification, research decisions, implementation plan, data model, contracts,
+and tasks established the intended solution before implementation began. They
+are the design foundation for the code and tests, not retrospective
+documentation of an existing application.
 
 | Artifact | Purpose | Link |
 |---|---|---|
@@ -546,7 +550,7 @@ The command verifies:
 - FR-001 through FR-024 exist exactly once in the specification;
 - every requirement has a traceability-matrix row and automated test evidence;
 - every test referenced by the matrix exists;
-- no as-built Spec Kit task is incomplete;
+- no planned Spec Kit implementation task is incomplete;
 - report-local hyperlinks resolve;
 - report requirement and test counts match the repository;
 - the documented five workflow stages and prompt tags exist in code;

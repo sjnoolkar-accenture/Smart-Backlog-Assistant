@@ -117,8 +117,8 @@ Research decisions and rejected alternatives are recorded in
 
 ## Phase 2: Implementation Mapping
 
-The as-built implementation tasks and source traceability are recorded in
-[tasks.md](tasks.md). All baseline tasks are complete.
+The specification-derived implementation tasks and source traceability are
+recorded in [tasks.md](tasks.md). All planned tasks are complete.
 
 ## Complexity Tracking
 

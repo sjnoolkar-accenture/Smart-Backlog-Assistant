@@ -1,7 +1,7 @@
 # Tasks: Smart Backlog Assistant
 
 **Input**: Design documents from `specs/001-smart-backlog-assistant/`  
-**Status**: As-built baseline; all implementation tasks are complete
+**Status**: Specification-first implementation plan; all planned tasks are complete
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -136,8 +136,8 @@ provider configuration.
 
 ## Deferred Features
 
-The following require separate specifications and are not incomplete baseline
-tasks:
+The following require separate specifications and are not incomplete tasks in
+this feature scope:
 
 - OCR for scanned PDFs.
 - Semantic retrieval for large backlogs.

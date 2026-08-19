@@ -94,15 +94,18 @@ Markdown supports human review.
 - Markdown only: difficult to validate and integrate.
 - Direct backlog publishing: unsafe without approval and target-system contracts.
 
-## Decision 8: Spec Kit Brownfield Baseline
+## Decision 8: Spec Kit Specification-First Foundation
 
-**Decision**: Capture the current implemented application as feature
-`001-smart-backlog-assistant`, with completed tasks and explicit out-of-scope
-enhancements.
+**Decision**: Start the application design with Spec Kit feature
+`001-smart-backlog-assistant`. Use the constitution, specification, research,
+plan, data model, contracts, and tasks to define the solution before
+implementation, with explicit out-of-scope enhancements.
 
-**Rationale**: Spec Kit supports iterative brownfield development. An as-built
-baseline gives future changes a stable constitution, behavioral specification,
-plan, contracts, and task traceability.
+**Rationale**: Establishing the specification first creates an agreed problem
+definition, architecture, behavioral contract, quality gates, and task sequence
+for AI-assisted implementation. It also preserves traceability from the initial
+requirements through design, code, and tests instead of documenting an already
+implemented application retrospectively.
 
 **Reference**: GitHub Spec Kit `v0.16.5`, using its constitution, specification,
 plan, and task artifact conventions.

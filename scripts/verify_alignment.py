@@ -92,7 +92,7 @@ for row in matrix_rows:
 pending_tasks = re.findall(r"^- \[ \] .+$", tasks, re.MULTILINE)
 require(
     not pending_tasks,
-    "As-built baseline contains incomplete tasks: "
+    "Specification-first plan contains incomplete tasks: "
     + ", ".join(pending_tasks),
 )
 
