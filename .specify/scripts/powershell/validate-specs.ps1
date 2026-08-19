@@ -14,6 +14,7 @@ $requiredFiles = @(
     "specs\$Feature\research.md",
     "specs\$Feature\data-model.md",
     "specs\$Feature\quickstart.md",
+    "specs\$Feature\test-traceability.md",
     "specs\$Feature\tasks.md",
     "specs\$Feature\contracts\cli-contract.md",
     "specs\$Feature\contracts\backlog-proposal.schema.json"

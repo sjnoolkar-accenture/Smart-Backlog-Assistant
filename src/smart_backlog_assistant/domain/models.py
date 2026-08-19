@@ -1,8 +1,21 @@
 """Structured contracts exchanged by the five workflow stages."""
 
-from typing import Literal
+from typing import Literal, TypeAlias
 
 from pydantic import BaseModel, Field
+
+EngineeringCategory: TypeAlias = Literal[
+    "Feature",
+    "Application Modernization",
+    "Infrastructure",
+    "DevOps",
+    "Testing",
+    "Reliability",
+    "Security",
+    "Performance",
+    "Operations",
+]
+Priority: TypeAlias = Literal["High", "Medium", "Low"]
 
 
 class BacklogItem(BaseModel):
@@ -25,18 +38,8 @@ class Requirement(BaseModel):
     id: str
     statement: str
     rationale: str
-    category: Literal[
-        "Feature",
-        "Application Modernization",
-        "Infrastructure",
-        "DevOps",
-        "Testing",
-        "Reliability",
-        "Security",
-        "Performance",
-        "Operations",
-    ] = "Feature"
-    priority: Literal["High", "Medium", "Low"] = "Medium"
+    category: EngineeringCategory = "Feature"
+    priority: Priority = "Medium"
     source_locations: list[str] = Field(default_factory=list)
 
 
@@ -64,8 +67,8 @@ class UserStory(BaseModel):
     title: str
     description: str
     acceptance_criteria: list[str]
-    priority: Literal["High", "Medium", "Low"]
-    category: str
+    priority: Priority
+    category: EngineeringCategory
     requirement_ids: list[str] = Field(default_factory=list)
     related_backlog_ids: list[str] = Field(default_factory=list)
     backlog_relationships: list[BacklogMatch] = Field(default_factory=list)

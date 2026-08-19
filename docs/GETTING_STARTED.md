@@ -162,7 +162,8 @@ python -m pytest
 
 The tests cover input loading, prompt contracts, all five required tool calls,
 guardrails, source grounding, backlog immutability, output traceability, and
-the CSV request manifest.
+the CSV request manifest. The requirement-level mapping is documented in
+[`specs/001-smart-backlog-assistant/test-traceability.md`](../specs/001-smart-backlog-assistant/test-traceability.md).
 
 ## Log files
 

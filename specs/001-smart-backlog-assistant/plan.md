@@ -52,6 +52,7 @@ specs/001-smart-backlog-assistant/
 |-- research.md
 |-- data-model.md
 |-- quickstart.md
+|-- test-traceability.md
 |-- contracts/
 |   |-- backlog-proposal.schema.json
 |   `-- cli-contract.md

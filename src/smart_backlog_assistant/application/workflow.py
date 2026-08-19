@@ -427,13 +427,12 @@ class SmartBacklogWorkflow:
             ) as exc:
                 LOGGER.warning(
                     "PROCESS correlation_id=%s step=%d/5 agent=%s tool=%s "
-                    "status=model_failed error_type=%s; using fallback: %s",
+                    "status=model_failed error_type=%s; using fallback",
                     self.correlation_id,
                     sequence,
                     self.AGENT_NAMES[name],
                     tool.name,
                     type(exc).__name__,
-                    exc,
                 )
                 try:
                     tool_value = tool.ensure_called()

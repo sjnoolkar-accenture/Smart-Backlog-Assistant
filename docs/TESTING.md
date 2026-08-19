@@ -9,6 +9,9 @@ extend, or create work.
 The evaluation checks meaning and traceability rather than requiring the
 generated wording to exactly match the reference wording.
 
+The formal mapping from all functional requirements to automated tests is in
+[`specs/001-smart-backlog-assistant/test-traceability.md`](../specs/001-smart-backlog-assistant/test-traceability.md).
+
 ## Test data
 
 | Data | Role in testing |

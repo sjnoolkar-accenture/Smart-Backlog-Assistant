@@ -120,6 +120,10 @@ provider configuration.
 - [x] T040 [P] Document guardrails in `docs/GUARDRAILS.md`
 - [x] T041 [P] Document testing and manual evaluation in `docs/TESTING.md`
 - [x] T042 Validate the complete application with `python -m pytest`
+- [x] T043 Add requirement-level targeted tests in
+  `tests/test_requirement_coverage.py`
+- [x] T044 Add the formal requirement-to-test matrix in
+  `specs/001-smart-backlog-assistant/test-traceability.md`
 
 ## Dependencies & Execution Order
 

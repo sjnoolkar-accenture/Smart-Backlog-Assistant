@@ -352,20 +352,33 @@ Run:
 python -m pytest
 ```
 
-The 17 tests cover:
+The 31 tests cover:
 
-- text and PDF loading with source locations;
+- text, Markdown, and PDF loading with normalization and source locations;
 - invalid backlog JSON;
+- measurable-constraint preservation and requirement summaries;
+- duplicate, related, and gap decisions with all action mappings;
+- complete story fields and typed priority/category contracts;
 - five required tool bindings;
 - simulated timeout fallback;
 - omitted and duplicate tool calls;
+- unexpected error propagation;
 - unknown identifiers;
 - inconsistent relationships and actions;
+- duplicate stories and configured limits;
 - invented requirement content;
 - final live-output fallback;
 - backlog file and object immutability;
-- rotating file logging;
+- CLI JSON and Markdown file output;
+- offline, live, and auto mode selection;
+- OpenAI and Azure OpenAI configuration;
+- runtime and logging range validation;
+- credential, source, and model-payload log safety;
+- rotating file and process logging;
 - scenario-manifest consistency.
+
+The complete requirement mapping is in
+[`specs/001-smart-backlog-assistant/test-traceability.md`](../specs/001-smart-backlog-assistant/test-traceability.md).
 
 ### 9.2 Scenario testing
 
