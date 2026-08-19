@@ -167,12 +167,17 @@ def test_sample_request_manifest_lists_all_source_requests():
 
     assert len(rows) == 6
     assert len({row["request_id"] for row in rows}) == len(rows)
+    assert len({row["output_directory"] for row in rows}) == len(rows)
     for row in rows:
         source_path = Path("data") / row["source_file"]
         backlog_path = Path("data") / row["backlog_file"]
+        output_path = Path(row["output_directory"])
         assert source_path.is_file()
         assert backlog_path.is_file()
-        assert Path(row["output_directory"]).is_dir()
+        assert not output_path.is_absolute()
+        assert output_path.parts[0] == "output"
+        assert ".." not in output_path.parts
+        assert len(output_path.parts) == 2
         normalize = lambda value: re.sub(r"\s+", " ", value).strip()
         assert normalize(row["request"]) == normalize(
             source_path.read_text(encoding="utf-8")
