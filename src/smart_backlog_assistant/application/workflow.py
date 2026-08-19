@@ -227,6 +227,29 @@ def deterministic_requirements_from_reader(
     return analysis
 
 
+def ground_requirements_from_reader(
+    analysis: RequirementAnalysis,
+    reader: SourceReaderOutput,
+) -> RequirementAnalysis:
+    """Require every model-derived statement to occur in source evidence."""
+    grounded = analysis.model_copy(deep=True)
+    for requirement in grounded.requirements:
+        statement = requirement.statement.casefold().strip()
+        locations = [
+            section.location
+            for section in reader.sections
+            if statement in section.section_text.casefold()
+            or section.section_text.casefold() in statement
+        ][:3]
+        if not locations:
+            raise ValueError(
+                "Requirements analysis contains a statement not present "
+                "in authoritative source evidence"
+            )
+        requirement.source_locations = locations
+    return grounded
+
+
 def deterministic_backlog_from_search(
     requirements: RequirementAnalysis,
     search: BacklogSearchOutput,
@@ -530,6 +553,30 @@ class SmartBacklogWorkflow:
                 self.settings,
             ),
         )
+        reader_output = SourceReaderOutput.model_validate(
+            source_tool.ensure_called()
+        )
+        try:
+            requirements = ground_requirements_from_reader(
+                requirements,
+                reader_output,
+            )
+        except ValueError as exc:
+            if self.mode != "live":
+                raise
+            LOGGER.warning(
+                "PROCESS correlation_id=%s step=2/5 agent=%s tool=%s "
+                "status=grounding_failed error_type=%s; using fallback",
+                self.correlation_id,
+                self.AGENT_NAMES["requirements"],
+                source_tool.name,
+                type(exc).__name__,
+            )
+            requirements = deterministic_requirements_from_reader(
+                reader_output,
+                self.settings,
+            )
+            self.tool_invocations[-1].execution = "fallback"
         backlog_tool = RequiredToolBinding(
             "backlog_search",
             "Search existing backlog items for every confirmed requirement.",

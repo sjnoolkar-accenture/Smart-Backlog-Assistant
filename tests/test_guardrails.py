@@ -93,9 +93,22 @@ def test_proposal_validation_rejects_inconsistent_action():
 
 def test_proposal_validation_rejects_invented_requirement_content():
     proposal, requirements, analysis, backlog = valid_context()
+    original_statement = proposal.requirements[0].statement
     proposal.requirements[0].statement = (
         "Deploy the Inventory Application to an unsupported lunar region"
     )
+
+    with pytest.raises(
+        ProposalGuardrailError,
+        match="requirement records do not match",
+    ):
+        ProposalValidationTool(GuardrailSettings()).enforce(
+            proposal, requirements, analysis, backlog
+        )
+
+    proposal.requirements[0].statement = original_statement
+    requirements.requirements[0].source_locations = ["Text block 1"]
+    proposal.requirements[0].source_locations = []
 
     with pytest.raises(
         ProposalGuardrailError,

@@ -352,7 +352,7 @@ Run:
 python -m pytest
 ```
 
-The 31 tests cover:
+The 32 tests cover:
 
 - text, Markdown, and PDF loading with normalization and source locations;
 - invalid backlog JSON;

@@ -20,13 +20,17 @@ from smart_backlog_assistant import (
 )
 from smart_backlog_assistant.application import workflow as workflow_module
 from smart_backlog_assistant.application.agents import parse_json_model
-from smart_backlog_assistant.application.tools import ProposalValidationTool
+from smart_backlog_assistant.application.tools import (
+    ProposalValidationTool,
+    SourceReaderTool,
+)
 from smart_backlog_assistant.application.tools.backlog_search import (
     BacklogCandidate,
     BacklogSearchOutput,
 )
 from smart_backlog_assistant.application.workflow import (
     deterministic_backlog_from_search,
+    ground_requirements_from_reader,
 )
 from smart_backlog_assistant.cli import configure_logging, run_cli
 from smart_backlog_assistant.configuration import (
@@ -70,6 +74,37 @@ def test_requirement_extraction_preserves_measurable_constraints_and_summary():
     assert analysis.summary == (
         f"Identified {len(analysis.requirements)} key requirements from the source."
     )
+
+
+def test_requirement_grounding_assigns_locations_and_rejects_invention():
+    reader = SourceReaderTool().read(
+        "The service must retain audit records for one year.",
+        "text",
+    )
+    grounded = ground_requirements_from_reader(
+        RequirementAnalysis(
+            summary="One requirement",
+            requirements=[
+                Requirement(
+                    id="REQ-001",
+                    statement=(
+                        "The service must retain audit records for one year"
+                    ),
+                    rationale="Test",
+                )
+            ],
+        ),
+        reader,
+    )
+
+    assert grounded.requirements[0].source_locations == ["Text block 1"]
+
+    invented = grounded.model_copy(deep=True)
+    invented.requirements[0].statement = (
+        "The service must deploy to an unsupported lunar region"
+    )
+    with pytest.raises(ValueError, match="not present"):
+        ground_requirements_from_reader(invented, reader)
 
 
 def test_relationship_and_action_matrix_covers_duplicate_related_and_gap():
@@ -173,6 +208,17 @@ def test_typed_contracts_reject_invalid_priority_category_and_agent_json():
 
     with pytest.raises(ValidationError):
         parse_json_model(json.dumps(story), UserStory)
+
+    schema_path = Path(
+        "specs/001-smart-backlog-assistant/contracts/"
+        "backlog-proposal.schema.json"
+    )
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    story_category = schema["$defs"]["UserStory"]["properties"]["category"]
+    requirement_category = schema["$defs"]["Requirement"]["properties"][
+        "category"
+    ]
+    assert story_category["enum"] == requirement_category["enum"]
 
 
 def test_validation_rejects_duplicate_stories_and_configured_limits():
@@ -349,7 +395,22 @@ def test_logs_do_not_expose_provider_credentials_or_model_payload(
     backlog = load_backlog(Path("data/existing_backlog.json"))
 
     class PayloadRunner:
-        async def run(self, *_args, **_kwargs):
+        async def run(self, stage, _evidence, _model_type, tool):
+            if stage == "requirements":
+                tool.ensure_called()
+                return RequirementAnalysis(
+                    summary="Invented requirement",
+                    requirements=[
+                        Requirement(
+                            id="REQ-001",
+                            statement=(
+                                "Deploy the service to an unsupported "
+                                "lunar region"
+                            ),
+                            rationale="Invented by model",
+                        )
+                    ],
+                )
             raise ValueError(model_payload)
 
     workflow = SmartBacklogWorkflow("offline")
@@ -357,8 +418,20 @@ def test_logs_do_not_expose_provider_credentials_or_model_payload(
     workflow.mode = "live"
 
     with caplog.at_level(logging.INFO, logger="smart_backlog"):
-        asyncio.run(workflow.run(source, source_type, backlog))
+        proposal = asyncio.run(
+            workflow.run(source, source_type, backlog)
+        )
 
     assert secret not in caplog.text
     assert source not in caplog.text
     assert model_payload not in caplog.text
+    assert all(
+        requirement.source_locations
+        for requirement in proposal.requirements
+    )
+    requirements_record = next(
+        item
+        for item in proposal.tool_invocations
+        if item.tool == "source_reader"
+    )
+    assert requirements_record.execution == "fallback"

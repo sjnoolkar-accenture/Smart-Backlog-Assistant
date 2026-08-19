@@ -8,8 +8,8 @@ and during local development.
 |---|---|---|
 | FR-001 Supported source formats | `test_loads_sample_source_and_backlog`, `test_pdf_loader_extracts_page_text`, `test_markdown_loader_normalizes_content_and_rejects_unsupported_format` | Automated |
 | FR-002 Backlog JSON input | `test_loads_sample_source_and_backlog`, `test_rejects_invalid_backlog` | Automated |
-| FR-003 Normalization and source locations | `test_pdf_loader_extracts_page_text`, `test_markdown_loader_normalizes_content_and_rejects_unsupported_format` | Automated |
-| FR-004 Grounded atomic requirements | `test_offline_workflow_produces_reviewed_stories`, `test_proposal_validation_rejects_invented_requirement_content` | Automated |
+| FR-003 Normalization and source locations | `test_pdf_loader_extracts_page_text`, `test_markdown_loader_normalizes_content_and_rejects_unsupported_format`, `test_requirement_grounding_assigns_locations_and_rejects_invention` | Automated |
+| FR-004 Grounded atomic requirements | `test_offline_workflow_produces_reviewed_stories`, `test_proposal_validation_rejects_invented_requirement_content`, `test_requirement_grounding_assigns_locations_and_rejects_invention` | Automated |
 | FR-005 Preserve measurable constraints | `test_requirement_extraction_preserves_measurable_constraints_and_summary` | Automated |
 | FR-006 Requirement summary | `test_requirement_extraction_preserves_measurable_constraints_and_summary`, `test_offline_workflow_produces_reviewed_stories` | Automated |
 | FR-007 Backlog comparison | `test_deterministic_analysis_finds_related_backlog`, `test_relationship_and_action_matrix_covers_duplicate_related_and_gap` | Automated |

@@ -105,11 +105,15 @@ class ProposalValidationTool:
             )
 
         expected_statements = set(known_requirements.values())
-        proposal_requirements = {
-            requirement.id: requirement.statement
+        proposal_requirements = [
+            requirement.model_dump()
             for requirement in proposal.requirements
-        }
-        if proposal_requirements != known_requirements:
+        ]
+        confirmed_requirements = [
+            requirement.model_dump()
+            for requirement in requirements.requirements
+        ]
+        if proposal_requirements != confirmed_requirements:
             findings.append(
                 self._error(
                     "traceability",

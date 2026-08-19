@@ -186,7 +186,17 @@
           ]
         },
         "category": {
-          "type": "string"
+          "enum": [
+            "Feature",
+            "Application Modernization",
+            "Infrastructure",
+            "DevOps",
+            "Testing",
+            "Reliability",
+            "Security",
+            "Performance",
+            "Operations"
+          ]
         },
         "requirement_ids": {
           "type": "array",

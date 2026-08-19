@@ -22,6 +22,19 @@ The project was developed using a specification-first, AI-assisted lifecycle:
 This created traceability from the original problem to requirements, design,
 code, tests, evaluation data, runtime evidence, and human approval.
 
+### 1.1 Evidence Boundary
+
+Capability statements in this report are linked to implemented code, automated
+tests, schemas, saved outputs, or executable commands. Statements about how AI
+assisted problem analysis, specification, coding, and review describe the
+development process; they are supported by the resulting artifacts but cannot
+be proven by runtime code alone.
+
+The committed `output/live` files are retained as historical run evidence.
+They may predate later guardrail improvements, which are identified explicitly
+in the limitations section rather than being presented as current output
+guarantees.
+
 ## 2. Problem Statement and AI-Assisted Analysis
 
 ### 2.1 Engineering Problem
@@ -439,7 +452,7 @@ The formal mapping is in the
 
 ### 8.1 Automated Test Scope
 
-The 31 pytest tests cover:
+The 32 pytest tests cover:
 
 - text, Markdown, and PDF loading;
 - normalization and PDF page locations;
@@ -462,6 +475,11 @@ The 31 pytest tests cover:
 - offline, live, and auto modes;
 - OpenAI and Azure OpenAI configuration;
 - safe logging and configuration validation.
+
+Automated live-mode tests use mocked provider configuration and agent runners,
+so the test suite does not make paid model calls. The committed
+[`output/live`](../output/live/) proposals provide separate evidence of
+provider-backed executions.
 
 The targeted requirement tests are in
 [`tests/test_requirement_coverage.py`](../tests/test_requirement_coverage.py).
@@ -489,12 +507,13 @@ python -m pytest -v --junitxml=test-results.xml
 The current validated result is:
 
 ```text
-31 passed
+32 passed
 ```
 
 ### 8.3 Manual End-to-End Test
 
-After automated tests passed, a representative meeting-notes scenario was run:
+After automated tests pass, use this representative meeting-notes scenario for
+manual end-to-end validation:
 
 ```powershell
 smart-backlog data\meeting_notes.txt `
@@ -503,7 +522,7 @@ smart-backlog data\meeting_notes.txt `
   --mode offline
 ```
 
-The manual review verifies:
+The manual review should verify:
 
 - known modernization work is reused where appropriate;
 - uncovered infrastructure, pipeline, and testing work is created;
@@ -631,7 +650,7 @@ The proposal includes:
 
 - correlation ID;
 - grounded requirements;
-- source locations;
+- canonical text-block or PDF-page source locations for each requirement;
 - stories and acceptance criteria;
 - priorities and categories;
 - backlog relationships and actions;
@@ -645,7 +664,7 @@ The application is packaged as an installable Python CLI and uses
 environment-based configuration. A delivery pipeline should run:
 
 1. the PowerShell Spec Kit validator;
-2. the 31-test pytest suite;
+2. the 32-test pytest suite;
 3. package build and dependency checks;
 4. secret and prohibited-content scanning;
 5. an offline end-to-end smoke test;
@@ -657,7 +676,7 @@ Recommended commands:
 ```powershell
 & .\.specify\scripts\powershell\validate-specs.ps1
 python -m pytest -v --junitxml=test-results.xml
-python -m build
+python -m pip wheel . --no-deps --wheel-dir dist
 smart-backlog data\meeting_notes.txt `
   --backlog data\existing_backlog.json `
   --output output\ci-smoke `
@@ -699,7 +718,7 @@ The implemented solution demonstrates:
 - transparent AI/deterministic responsibility boundaries;
 - prompt engineering with grounding and injection resistance;
 - 24 functional requirements mapped to automated tests;
-- 31 passing automated tests;
+- 32 passing automated tests;
 - six realistic evaluation scenarios;
 - deterministic fallback and final validation;
 - safe logging and audit records;
@@ -711,6 +730,10 @@ Current limitations:
 
 - scanned PDF OCR is not supported;
 - matching uses transparent token overlap rather than semantic retrieval;
+- the committed live samples were generated before deterministic source-location
+  enforcement and therefore contain empty `source_locations`; new workflow
+  executions ground every requirement statement in Source Reader evidence and
+  assign canonical text-block or PDF-page locations;
 - there is no live work-tracking integration;
 - the application does not publish backlog items;
 - organization-specific categories and priorities are not configurable;
