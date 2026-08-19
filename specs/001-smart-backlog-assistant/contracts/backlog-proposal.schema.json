@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BacklogProposal",
+  "type": "object",
+  "required": [
+    "correlation_id",
+    "summary",
+    "requirements",
+    "key_requirements",
+    "stories",
+    "approval_required",
+    "tool_invocations"
+  ],
+  "properties": {
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string"
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Requirement"
+      }
+    },
+    "key_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/UserStory"
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "review_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "approval_required": {
+      "const": true
+    },
+    "tool_invocations": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "$ref": "#/$defs/ToolInvocationRecord"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "Requirement": {
+      "type": "object",
+      "required": [
+        "id",
+        "statement",
+        "rationale",
+        "category",
+        "priority",
+        "source_locations"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "Feature",
+            "Application Modernization",
+            "Infrastructure",
+            "DevOps",
+            "Testing",
+            "Reliability",
+            "Security",
+            "Performance",
+            "Operations"
+          ]
+        },
+        "priority": {
+          "enum": [
+            "High",
+            "Medium",
+            "Low"
+          ]
+        },
+        "source_locations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "BacklogMatch": {
+      "type": "object",
+      "required": [
+        "requirement_id",
+        "backlog_id",
+        "relationship",
+        "rationale",
+        "recommended_action"
+      ],
+      "properties": {
+        "requirement_id": {
+          "type": "string"
+        },
+        "backlog_id": {
+          "type": "string"
+        },
+        "relationship": {
+          "enum": [
+            "duplicate",
+            "related"
+          ]
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "recommended_action": {
+          "enum": [
+            "reuse_existing",
+            "extend_existing"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserStory": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "description",
+        "acceptance_criteria",
+        "priority",
+        "category",
+        "requirement_ids",
+        "related_backlog_ids",
+        "backlog_relationships",
+        "recommended_action"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "priority": {
+          "enum": [
+            "High",
+            "Medium",
+            "Low"
+          ]
+        },
+        "category": {
+          "type": "string"
+        },
+        "requirement_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "related_backlog_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "backlog_relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BacklogMatch"
+          }
+        },
+        "recommended_action": {
+          "enum": [
+            "reuse_existing",
+            "extend_existing",
+            "create_new"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ToolInvocationRecord": {
+      "type": "object",
+      "required": [
+        "correlation_id",
+        "agent",
+        "tool",
+        "call_count",
+        "execution"
+      ],
+      "properties": {
+        "correlation_id": {
+          "type": "string"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "tool": {
+          "type": "string"
+        },
+        "call_count": {
+          "const": 1
+        },
+        "execution": {
+          "enum": [
+            "model",
+            "fallback"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
