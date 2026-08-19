@@ -1073,4 +1073,3 @@ The strongest closing statement is:
 - [Microsoft Purview](https://learn.microsoft.com/en-us/purview/)
 - [Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/)
 - [Azure Well-Architected Framework](https://learn.microsoft.com/en-us/azure/well-architected/)
-
