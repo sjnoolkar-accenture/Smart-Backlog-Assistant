@@ -250,28 +250,43 @@ Each stage constructs a `RequiredToolBinding` with a name, description, and
 zero-argument callback. The wrapper exposes that callback to the agent and
 tracks its execution.
 
-`ensure_called()` invokes the callback when it has not yet run, then verifies
-that it completed exactly once. This behavior gives live and offline execution
-the same evidence contract:
+The binding has three entry points. The agent can invoke `self.callable`
+directly, offline execution uses `ensure_called()`, and live-mode recovery can
+use `execute_fallback()`. Keeping these paths separate shows where each check
+actually occurs:
 
 ```mermaid
-flowchart TD
-    Ensure[ensure_called] --> Called{Call count is zero}
-    Called -->|Yes| Invoke[Invoke wrapped callable]
-    Called -->|No| Validate[Validate state]
-    Invoke --> Increment[Increment call count]
-    Increment --> Duplicate{Call count exceeds one}
-    Duplicate -->|Yes| Error[Raise ValueError]
-    Duplicate -->|No| Callback[Execute deterministic callback]
-    Callback --> Store[Store BaseModel value]
-    Store --> Validate
-    Validate --> Complete{Count is one and value exists}
-    Complete -->|Yes| Return[Return stored value]
-    Complete -->|No| Error
+flowchart LR
+    subgraph Direct[Agent invokes self.callable]
+        A1[required_tool] --> A2[Increment call_count]
+        A2 --> A3{call_count greater than 1}
+        A3 -->|Yes| A4[Raise ValueError]
+        A3 -->|No| A5[Run callback]
+        A5 --> A6[Store value]
+        A6 --> A7[Return JSON-compatible dictionary]
+    end
+
+    subgraph Ensure[Offline path calls ensure_called]
+        E1[ensure_called] --> E2{call_count equals 0}
+        E2 -->|Yes| A1
+        E2 -->|No| E3[Skip invocation]
+        A7 --> E4{call_count equals 1 and value exists}
+        E3 --> E4
+        E4 -->|Yes| E5[Return stored BaseModel]
+        E4 -->|No| E6[Raise ValueError]
+    end
+
+    subgraph Recovery[Live recovery calls execute_fallback]
+        F1[execute_fallback] --> F2[Run callback directly]
+        F2 --> F3[Store value and set call_count to 1]
+        F3 --> F4[Return stored BaseModel]
+    end
 ```
 
 In C# terms, the callback is a `Func<BaseModel>`, while `self.callable` is the
 wrapped delegate that adds exactly-once tracking and JSON-compatible output.
+`execute_fallback()` deliberately bypasses the wrapped callable and normalizes
+the stored state to one completed invocation.
 
 ## Deterministic helper functions
 
