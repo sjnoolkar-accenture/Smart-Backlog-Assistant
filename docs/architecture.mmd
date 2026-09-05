@@ -39,16 +39,21 @@ flowchart TB
     L --> O
     BL --> O
 
-    O --> R
-    R --> A
-    A --> S
-    S --> Q
+    O -- "WorkPlan" --> R
+    R -- "RequirementAnalysis" --> A
+    A -- "BacklogAnalysis" --> S
+    S -- "StoryDraft" --> Q
 
-    O -. calls .-> RI
-    R -. calls .-> SR
-    A -. calls .-> BS
-    S -. calls .-> SC
-    Q -. calls .-> PV
+    O -. "source_type, backlog_item_count" .-> RI
+    RI -. "RequestInspectionOutput" .-> O
+    R -. "source: str, source_type" .-> SR
+    SR -. "SourceReaderOutput" .-> R
+    A -. "RequirementAnalysis, list[BacklogItem]" .-> BS
+    BS -. "BacklogSearchOutput" .-> A
+    S -. "RequirementAnalysis, BacklogAnalysis" .-> SC
+    SC -. "StoryContextOutput" .-> S
+    Q -. "RequirementAnalysis, BacklogAnalysis, StoryDraft, list[BacklogItem]" .-> PV
+    PV -. "ProposalValidationResult" .-> Q
 
     PV --> J
     PV -. workflow events .-> LOG
