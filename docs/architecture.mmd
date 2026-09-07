@@ -39,21 +39,21 @@ flowchart TB
     L --> O
     BL --> O
 
-    O -- "WorkPlan" --> R
-    R -- "RequirementAnalysis" --> A
-    A -- "BacklogAnalysis" --> S
-    S -- "StoryDraft" --> Q
+    O -- "WorkPlan\n· source_type · stages[]" --> R
+    R -- "RequirementAnalysis\n· requirements[id, statement, source_locations[]]\n· assumptions[]" --> A
+    A -- "BacklogAnalysis\n· matches[req_id, backlog_id, relationship, action]\n· gap_requirement_ids[]" --> S
+    S -- "StoryDraft\n· stories[id, title, acceptance_criteria[]\n  requirement_ids[], recommended_action]" --> Q
 
-    O -. "source_type, backlog_item_count" .-> RI
-    RI -. "RequestInspectionOutput" .-> O
-    R -. "source: str, source_type" .-> SR
-    SR -. "SourceReaderOutput" .-> R
-    A -. "RequirementAnalysis, list[BacklogItem]" .-> BS
-    BS -. "BacklogSearchOutput" .-> A
-    S -. "RequirementAnalysis, BacklogAnalysis" .-> SC
-    SC -. "StoryContextOutput" .-> S
-    Q -. "RequirementAnalysis, BacklogAnalysis, StoryDraft, list[BacklogItem]" .-> PV
-    PV -. "ProposalValidationResult" .-> Q
+    O -. "source_type · backlog_item_count" .-> RI
+    RI -. "RequestInspectionOutput\n· request_classification · valid_source\n· required_stages[] · warnings[]" .-> O
+    R -. "source: str · source_type" .-> SR
+    SR -. "SourceReaderOutput\n· sections[section_id, section_text, location]\n· content_complete" .-> R
+    A -. "requirements[id, statement]\n· BacklogItem[id, title, description]" .-> BS
+    BS -. "BacklogSearchOutput\n· candidates[req_id, backlog_id, relevance_score]\n· no_match_requirement_ids[]" .-> A
+    S -. "requirements[id, statement, priority, category]\n· matches[req_id, backlog_id]" .-> SC
+    SC -. "StoryContextOutput\n· requirement_contexts[\n  req_id, statement, priority,\n  category, related_backlog_items[]]" .-> S
+    Q -. "requirements · analysis[matches]\n· draft[stories] · backlog[id]" .-> PV
+    PV -. "ProposalValidationResult\n· overall_result: passed|failed\n· findings[severity, category]\n· valid_story_count" .-> Q
 
     PV --> J
     PV -. workflow events .-> LOG
