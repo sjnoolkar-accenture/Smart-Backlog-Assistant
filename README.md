@@ -81,6 +81,12 @@ the proposal.
 See the [architecture diagram](docs/PROJECT_DESIGN.md#4-architecture) for the
 complete agent, tool, loader, logging, and output flow.
 
+The [extend existing flow diagram](docs/example-extend-flow.png) traces a single
+requirement (REQ-001) through all five stages for a concrete `extend_existing`
+scenario, showing every Pydantic handoff object, LLM-generated fields
+(underlined green), and tool inputs/outputs.  The editable source is
+[`docs/example-extend-flow.mmd`](docs/example-extend-flow.mmd).
+
 ## MVP scope
 
 The MVP supports text, Markdown, text-based PDFs, and an existing backlog
@@ -143,3 +149,5 @@ propose three additional engineering stories.
 - [Tool interfaces and diagram](docs/TOOL_INTERFACES.md)
 - [Tool interface diagram image](docs/tool_interface_diagram.png)
 - [Testing approach](docs/TESTING.md)
+- [Extend existing flow diagram (PNG)](docs/example-extend-flow.png)
+- [Extend existing flow diagram (source)](docs/example-extend-flow.mmd)

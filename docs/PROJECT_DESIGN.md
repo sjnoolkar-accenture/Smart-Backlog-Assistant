@@ -92,6 +92,16 @@ validation.
 
 The editable source is available in [architecture.mmd](architecture.mmd).
 
+The **extend existing flow diagram** below traces a concrete single-requirement
+run through all five stages using `proposed_modernization_extension.txt` and
+`existing_backlog.json` (BL-201). It shows the Pydantic object exchanged at
+each handoff, all tool inputs and outputs, and distinguishes LLM-generated
+field values (underlined green) from pass-through or rule-derived values:
+
+![Extend existing flow](example-extend-flow.png)
+
+Editable source: [`example-extend-flow.mmd`](example-extend-flow.mmd).
+
 ### 4.1 Main components
 
 | Layer | Components | Responsibility |

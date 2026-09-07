@@ -1,0 +1,91 @@
+---
+title: Smart Backlog Assistant — Extend Existing Flow
+---
+%%{init: {"theme": "base", "flowchart": {"htmlLabels": true}, "themeVariables": {"fontSize": "12px", "primaryColor": "#dbeafe", "primaryTextColor": "#1e3a5f", "primaryBorderColor": "#2563eb", "lineColor": "#475569", "edgeLabelBackground": "#f8fafc"}}}%%
+flowchart TB
+
+    classDef agent    fill:#dbeafe,stroke:#2563eb,color:#1e3a5f,font-weight:bold
+    classDef tool     fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef io       fill:#f3e8ff,stroke:#9333ea,color:#581c87,font-weight:bold
+    classDef agentout fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#14532d
+    classDef detout   fill:#f9fafb,stroke:#94a3b8,stroke-width:2px,color:#374151
+    classDef header   fill:#f1f5f9,stroke:#94a3b8,color:#1e293b
+    classDef legend   fill:#fffbeb,stroke:#f59e0b,color:#78350f
+
+    %% ── Heading & description ────────────────────────────────────
+    HDR["<div style='text-align:center'><b>Smart Backlog Assistant — Extend Existing Workflow</b><br/>Traces a single requirement (REQ-001) through all 5 agent stages using<br/><b>proposed_modernization_extension.txt</b> as input and <b>existing_backlog.json</b> (BL-201) for comparison.<br/>REQ-001 matches BL-201 (Angular 9→15 upgrade) with token overlap score 0.29 → relationship: <b>related</b> → action: <b>extend_existing</b></div>"]:::header
+
+    %% ── Legend ───────────────────────────────────────────────────
+    LEG["<div style='text-align:left'><b>Legend</b><br/><span style='color:green'><u>underlined green text</u></span>  =  property value set by the LLM<br/>plain text  =  value passed through from input or tool output, or rule-derived<br/><i>italic / gray border node</i>  =  deterministic execution — no LLM involvement</div>"]:::legend
+
+    %% ── IO nodes ────────────────────────────────────────────────
+    INPUT(["<b>INPUT</b><br/>proposed_modernization_extension.txt<br/>source_type: text  |  backlog_item_count: 1"]):::io
+    OUT(["<b>OUTPUT — BacklogProposal</b><br/>correlation_id: 3421bf05-c60a-4eeb-86b5-bea8c6f03697<br/>STORY-001 → extend_existing → BL-201<br/>approval_required: true  |  tool_invocations: 5"]):::io
+
+    %% ── Agents ──────────────────────────────────────────────────
+    O["<b>1 · Orchestrator Agent</b>"]:::agent
+    R["<b>2 · Requirements Analyst Agent</b>"]:::agent
+    A["<b>3 · Backlog Analyst Agent</b>"]:::agent
+    S["<b>4 · Story Writer Agent</b>"]:::agent
+    Q["<b>5 · Quality Reviewer Agent</b>"]:::agent
+
+    %% ── Tools ───────────────────────────────────────────────────
+    RI["Request Inspection Tool"]:::tool
+    SR["Source Reader Tool"]:::tool
+    BS["Backlog Search Tool"]:::tool
+    SC["Story Context Tool"]:::tool
+    PV["Proposal Validation Tool"]:::tool
+
+    %% ── Agent-output nodes ───────────────────────────────────────
+    %% Green underline = LLM decided  |  plain = pass-through or rule-derived
+
+    WP["<div style='text-align:left'><b>WorkPlan</b>  [execution: model]<br/><span style="color:green"><u>objective: 'Convert source requirements into a reviewed backlog proposal'</u></span><br/>source_type: text  ← from input context<br/>backlog_item_count: 1  ← from input context<br/>stages: [requirements,backlog,writer,reviewer]  ← from RI.required_stages</div>"]:::agentout
+
+    RA["<div style='text-align:left'><b>RequirementAnalysis</b>  [execution: model]<br/><span style="color:green"><u>summary: 'Identified 3 key requirements from the source.'</u></span><br/>REQ-001:<br/>&nbsp;&nbsp;id: REQ-001  ← sequential<br/>&nbsp;&nbsp;<span style="color:green"><u>statement: 'Extend Angular 15 upgrade — bundle-size analysis,</u></span><br/>&nbsp;&nbsp;<span style="color:green"><u>&nbsp;&nbsp;WCAG checks, Node.js 20 compatibility'</u></span><br/>&nbsp;&nbsp;<span style="color:green"><u>rationale: 'Identified directly from the supplied source'</u></span><br/>&nbsp;&nbsp;<span style="color:green"><u>category: Application Modernization</u></span><br/>&nbsp;&nbsp;<span style="color:green"><u>priority: Medium</u></span><br/>&nbsp;&nbsp;source_locations: []  ← deterministic grounding<br/>REQ-002, REQ-003: similarly extracted<br/><span style="color:green"><u>assumptions: []</u></span></div>"]:::agentout
+
+    BA["<div style='text-align:left'><b>BacklogAnalysis</b>  [execution: model]<br/>matches: [<br/>&nbsp;&nbsp;requirement_id: REQ-001  ← from tool candidate<br/>&nbsp;&nbsp;backlog_id: BL-201  ← from tool candidate<br/>&nbsp;&nbsp;<span style="color:green"><u>relationship: related</u></span><br/>&nbsp;&nbsp;recommended_action: extend_existing  ← rule(related→extend_existing)<br/>&nbsp;&nbsp;<span style="color:green"><u>rationale: 'Token overlap score 0.29'</u></span><br/>&nbsp;&nbsp;— — —<br/>&nbsp;&nbsp;requirement_id: REQ-003  ← from tool candidate<br/>&nbsp;&nbsp;backlog_id: BL-201  ← from tool candidate<br/>&nbsp;&nbsp;<span style="color:green"><u>relationship: related</u></span><br/>&nbsp;&nbsp;recommended_action: extend_existing  ← rule(related→extend_existing)<br/>&nbsp;&nbsp;<span style="color:green"><u>rationale: 'Token overlap score 0.15'</u></span>&nbsp;]<br/><span style="color:green"><u>gap_requirement_ids: [REQ-002]</u></span></div>"]:::agentout
+
+    SD["<div style='text-align:left'><b>StoryDraft</b>  [execution: fallback — deterministic_stories()]<br/><i>No LLM modifications — all properties set deterministically</i><br/>STORY-001: requirement_ids=[REQ-001]  ·  recommended_action=extend_existing<br/>&nbsp;&nbsp;related_backlog_ids=[BL-201]  ·  priority=Medium  ·  category=Application Modernization<br/>STORY-002: requirement_ids=[REQ-002]  ·  recommended_action=create_new  ·  priority=High<br/>STORY-003: requirement_ids=[REQ-003]  ·  recommended_action=extend_existing<br/>&nbsp;&nbsp;related_backlog_ids=[BL-201]  ·  priority=High  ·  category=Testing</div>"]:::detout
+
+    %% ── Note blocks ─────────────────────────────────────────────
+    NOTE_IN@{ shape: note, label: "📄 Meeting Notes  ·  Input\n─────────────────────────────────\nProposed Inventory Application\nModernization Extension\n\nExtend the existing Inventory Application\nAngular 15 upgrade to include automated\nbundle-size analysis, WCAG accessibility\nchecks, and Node.js 20 build compatibility.\n\nThe build should fail when the production\nbundle exceeds the agreed size limit or when\ncritical accessibility violations are detected.\nExisting inventory workflows must continue\nto pass regression testing." }
+
+    NOTE_BL@{ shape: note, label: "📋 Existing Backlog  ·  Input\n─────────────────────────────────\nBL-201:\n  title: Upgrade the Inventory Application\n         from Angular 9 to Angular 15\n  description: Upgrade Angular and related\n    dependencies, resolve compatibility issues,\n    and confirm existing features continue\n  status: Active\n  priority: High\n  category: Application Modernization" }
+
+    NOTE_OUT@{ shape: note, label: "📊 Output  ·  BacklogProposal\n─────────────────────────────────\nSTORY-001  (extend_existing)\n  requirement_ids: [REQ-001]\n  related_backlog_ids: [BL-201]\n  recommended_action: extend_existing\n\nSTORY-002  (create_new)\n  requirement_ids: [REQ-002]\n\nSTORY-003  (extend_existing)\n  requirement_ids: [REQ-003]\n  related_backlog_ids: [BL-201]\n\napproval_required: true\ntool_invocations: 5 records" }
+
+    %% ── Main flow ────────────────────────────────────────────────
+    HDR --> INPUT
+    INPUT --> O
+
+    O -. "source_type=text · backlog_item_count=1" .-> RI
+    RI -. "request_classification=meeting_notes\nvalid_source=true · available_backlog=true\nrequired_stages=[requirements,backlog,writer,reviewer]" .-> O
+
+    O --> WP --> R
+
+    R -. "source=raw text · source_type=text" .-> SR
+    SR -. "SourceReaderOutput\nsections=[{SECTION-001:'Proposed Inventory App...' Text block 1}\n {SECTION-002:'Extend the existing...' Text block 2}\n  ...SECTION-003..007]\ncontent_complete=true" .-> R
+
+    R --> RA --> A
+
+    A -. "requirements[REQ-001..003: statement, category, priority]\nBacklogItem[BL-201: 'Upgrade Angular 9 to 15'\n  status=Active · priority=High]" .-> BS
+    BS -. "BacklogSearchOutput\ncandidates=[{REQ-001→BL-201, score:0.29}\n            {REQ-003→BL-201, score:0.15}]\nno_match_requirement_ids=[REQ-002]" .-> A
+
+    A --> BA --> S
+
+    S -. "requirements[REQ-001..003: id, statement, priority, category]\nmatches[REQ-001→BL-201 (related), REQ-003→BL-201 (related)]" .-> SC
+    SC -. "StoryContextOutput\nrequirement_contexts=[\n  {REQ-001, priority:Medium, category:App Mod., related:[BL-201]}\n  {REQ-002, priority:High, category:Security, related:[]}\n  {REQ-003, priority:High, category:Testing, related:[BL-201]}]" .-> S
+
+    S --> SD --> Q
+
+    Q -. "proposal[STORY-001..003] + requirements[REQ-001..003]\n+ analysis[matches, gap_ids] + backlog[BL-201]" .-> PV
+    PV -. "ProposalValidationResult\noverall_result=passed · valid_story_count=3 · findings=[]" .-> Q
+
+    Q --> OUT
+    OUT --> LEG
+
+    %% ── Note connections ──────────────────────────────────────────
+    INPUT -. "source document" .-> NOTE_IN
+    BS -. "existing backlog" .-> NOTE_BL
+    OUT -. "proposal" .-> NOTE_OUT
+

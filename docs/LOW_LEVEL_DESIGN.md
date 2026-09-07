@@ -92,6 +92,12 @@ Each output directory contains:
 5. A reviewer compares the generated proposal with the source, existing
    backlog, testing expectations, and `expected_backlog.json`.
 
+The [extend existing flow diagram](example-extend-flow.png) traces step 3 in
+detail for the `proposed_modernization_extension.txt` scenario: it shows the
+Pydantic handoff object at each agent boundary, every tool input and output, and
+marks which field values were set by the LLM vs derived deterministically.
+Editable source: [`example-extend-flow.mmd`](example-extend-flow.mmd).
+
 ## Application responsibilities
 
 The `src/smart_backlog_assistant` package separates responsibilities:

@@ -142,6 +142,17 @@ documentation written after implementation.
 The editable diagram is available in
 [`architecture.mmd`](architecture.mmd).
 
+For a concrete end-to-end trace of a single requirement through all five agent
+stages, see the **extend existing flow diagram**:
+
+![Extend existing flow](example-extend-flow.png)
+
+The diagram uses `proposed_modernization_extension.txt` as input and
+`existing_backlog.json` (BL-201) as reference. It shows every Pydantic handoff
+object, all tool inputs and outputs, and highlights LLM-generated fields
+(underlined green) vs values derived deterministically from tool output or input
+context.  The editable source is [`example-extend-flow.mmd`](example-extend-flow.mmd).
+
 ### 4.1 Main Components
 
 | Layer | Components | Responsibility |
@@ -804,6 +815,8 @@ execution, and human accountability.
 - [Repository README](../README.md)
 - [Project design](PROJECT_DESIGN.md)
 - [Architecture source](architecture.mmd)
+- [Extend existing flow diagram (PNG)](example-extend-flow.png)
+- [Extend existing flow diagram (source)](example-extend-flow.mmd)
 - [Getting started](GETTING_STARTED.md)
 - [Prompt engineering](PROMPT_ENGINEERING.md)
 - [Guardrails](GUARDRAILS.md)
