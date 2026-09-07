@@ -9,11 +9,7 @@ flowchart TB
     classDef io       fill:#f3e8ff,stroke:#9333ea,color:#581c87,font-weight:bold
     classDef agentout fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#14532d
     classDef detout   fill:#f9fafb,stroke:#94a3b8,stroke-width:2px,color:#374151
-    classDef header   fill:#f1f5f9,stroke:#94a3b8,color:#1e293b
     classDef legend   fill:#fffbeb,stroke:#f59e0b,color:#78350f
-
-    %% ── Heading & description ────────────────────────────────────
-    HDR["<div style='text-align:center'><b>Smart Backlog Assistant — Extend Existing Workflow</b><br/>Traces a single requirement (REQ-001) through all 5 agent stages using<br/><b>proposed_modernization_extension.txt</b> as input and <b>existing_backlog.json</b> (BL-201) for comparison.<br/>REQ-001 matches BL-201 (Angular 9→15 upgrade) with token overlap score 0.29 → relationship: <b>related</b> → action: <b>extend_existing</b></div>"]:::header
 
     %% ── Legend ───────────────────────────────────────────────────
     LEG["<div style='text-align:left'><b>Legend</b><br/><span style='color:green'><u>underlined green text</u></span>  =  property value set by the LLM<br/>plain text  =  value passed through from input or tool output, or rule-derived<br/><i>italic / gray border node</i>  =  deterministic execution — no LLM involvement</div>"]:::legend
@@ -55,7 +51,6 @@ flowchart TB
     NOTE_OUT@{ shape: note, label: "📊 Output  ·  BacklogProposal\n─────────────────────────────────\nSTORY-001  (extend_existing)\n  requirement_ids: [REQ-001]\n  related_backlog_ids: [BL-201]\n  recommended_action: extend_existing\n\nSTORY-002  (create_new)\n  requirement_ids: [REQ-002]\n\nSTORY-003  (extend_existing)\n  requirement_ids: [REQ-003]\n  related_backlog_ids: [BL-201]\n\napproval_required: true\ntool_invocations: 5 records" }
 
     %% ── Main flow ────────────────────────────────────────────────
-    HDR --> INPUT
     INPUT --> O
 
     O -. "source_type=text · backlog_item_count=1" .-> RI

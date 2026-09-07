@@ -92,17 +92,36 @@ validation.
 
 The editable source is available in [architecture.mmd](architecture.mmd).
 
-The **extend existing flow diagram** below traces a concrete single-requirement
-run through all five stages using `proposed_modernization_extension.txt` and
-`existing_backlog.json` (BL-201). It shows the Pydantic object exchanged at
-each handoff, all tool inputs and outputs, and distinguishes LLM-generated
-field values (underlined green) from pass-through or rule-derived values:
+### 4.1 Extend Existing — End-to-End Example Flow
+
+The diagram below traces REQ-001 through all five agent stages for the
+`extend_existing` scenario. Input is `proposed_modernization_extension.txt`
+(source_type: text, backlog_item_count: 1) with `existing_backlog.json`
+(BL-201 — Upgrade Angular 9→15) as the backlog reference. REQ-001 matches
+BL-201 with a token overlap score of 0.29 → relationship: `related` →
+recommended action: `extend_existing`. Underlined green text marks field values
+set by the LLM; plain text is derived deterministically from tool output or
+input context.
 
 ![Extend existing flow](example-extend-flow.png)
 
 Editable source: [`example-extend-flow.mmd`](example-extend-flow.mmd).
 
-### 4.1 Main components
+#### Agent prompts — correlated to this example
+
+`build_agent_instructions(stage)` sets the agent's system prompt (`instructions` on the `Agent` object).
+`build_stage_prompt(stage, schema, evidence)` builds the user-turn prompt passed to `agent.run()`;
+the `evidence` column below shows the exact dict keys supplied in this run.
+
+| Stage | System prompt — `build_agent_instructions` | Stage prompt evidence — `build_stage_prompt` |
+|---|---|---|
+| **1 · Orchestrator** | **Role:** Orchestrator Agent<br>**Objective:** Classify the request and produce the smallest valid ordered work plan<br>**Tool:** `request_inspection` (exactly once)<br>**Rules:** include only supported stages; keep order requirements→backlog→writer→reviewer; do not extract requirements or write stories | **Task:** Classify the request and produce the smallest valid ordered work plan<br>**Evidence:** `source_type: "text"` · `backlog_item_count: 1` · `correlation_id` |
+| **2 · Requirements** | **Role:** Expert business analyst and software architect specializing in extracting and structuring software requirements<br>**Objective:** Extract atomic, source-grounded requirements and their constraints<br>**Tool:** `source_reader` (exactly once)<br>**Rules:** exclude headings/commentary; keep independently testable requirements; retain all constraints and source locations; assign stable IDs | **Task:** Extract atomic, source-grounded requirements and their constraints<br>**Evidence:** `plan` (WorkPlan — objective, source_type: text, stages) · `source` (full text of proposed_modernization_extension.txt — 7 sections) |
+| **3 · Backlog** | **Role:** Backlog Analyst Agent<br>**Objective:** Compare every confirmed requirement with existing backlog candidates<br>**Tool:** `backlog_search` (exactly once)<br>**Rules:** duplicate → reuse_existing; related → extend_existing; gap → create_new; never relate on shared product name alone<br>Includes relationship decision examples | **Task:** Compare every confirmed requirement with existing backlog candidates<br>**Evidence:** `requirements` (REQ-001..003 with statements, priorities, categories) · `backlog` (BL-201 — Upgrade Angular 9→15, status: Active) |
+| **4 · Story Writer** _(execution: fallback)_ | **Role:** Story Writer Agent<br>**Objective:** Create concise, testable stories from confirmed requirements and relationships<br>**Tool:** `story_context` (exactly once)<br>**Rules:** reference requirement IDs; observable acceptance criteria; use recommended_action consistently<br>Includes relationship decision examples<br>_In this run: model output failed guardrails → `deterministic_stories()` used_ | **Task:** Create concise, testable stories from confirmed requirements and relationships<br>**Evidence:** `requirements` (REQ-001..003) · `backlog_analysis` {matches: [REQ-001→BL-201 related, REQ-003→BL-201 related], gap_requirement_ids: [REQ-002]} |
+| **5 · Quality Reviewer** | **Role:** Quality Reviewer Agent<br>**Objective:** Return a corrected final proposal that is grounded, complete, and testable<br>**Tool:** `proposal_validation` (exactly once)<br>**Rules:** remove duplicates/invalid refs; map stories to known requirements; verify backlog IDs in supplied backlog; correct wording without adding scope; retain validation warnings<br>Includes relationship decision examples | **Task:** Return a corrected final proposal that is grounded, complete, and testable<br>**Evidence:** `requirements` (REQ-001..003) · `backlog_analysis` · `draft` {stories: [STORY-001 extend_existing, STORY-002 create_new, STORY-003 extend_existing]} |
+
+### 4.2 Main components
 
 | Layer | Components | Responsibility |
 |---|---|---|
