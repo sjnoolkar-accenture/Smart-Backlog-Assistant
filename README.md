@@ -151,3 +151,4 @@ propose three additional engineering stories.
 - [Testing approach](docs/TESTING.md)
 - [Extend existing flow diagram (PNG)](docs/example-extend-flow.png)
 - [Extend existing flow diagram (source)](docs/example-extend-flow.mmd)
+- [Agent prompt examples — extend existing run](docs/PROMPT_EXAMPLES.md)
