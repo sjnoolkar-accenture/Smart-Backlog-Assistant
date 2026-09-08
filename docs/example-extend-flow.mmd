@@ -15,7 +15,8 @@ flowchart TB
     LEG["<div style='text-align:left'><b>Legend</b><br/><span style='color:green'><u>underlined green text</u></span>  =  property value set by the LLM<br/>plain text  =  value passed through from input or tool output, or rule-derived<br/><i>italic / gray border node</i>  =  deterministic execution — no LLM involvement</div>"]:::legend
 
     %% ── IO nodes ────────────────────────────────────────────────
-    INPUT(["<b>INPUT</b><br/>proposed_modernization_extension.txt<br/>source_type: text  |  backlog_item_count: 1"]):::io
+    INPUT(["<b>SOURCE INPUT</b><br/>proposed_modernization_extension.txt<br/>source_type: text"]):::io
+    BL_IN(["<b>BACKLOG INPUT</b><br/>existing_backlog.json<br/>backlog_item_count: 1  ·  1 item: BL-201"]):::io
     OUT(["<b>OUTPUT — BacklogProposal</b><br/>correlation_id: 3421bf05-c60a-4eeb-86b5-bea8c6f03697<br/>STORY-001 → extend_existing → BL-201<br/>approval_required: true  |  tool_invocations: 5"]):::io
 
     %% ── Agents ──────────────────────────────────────────────────
@@ -52,6 +53,7 @@ flowchart TB
 
     %% ── Main flow ────────────────────────────────────────────────
     INPUT --> O
+    BL_IN --> O
 
     O -. "source_type=text · backlog_item_count=1" .-> RI
     RI -. "request_classification=meeting_notes\nvalid_source=true · available_backlog=true\nrequired_stages=[requirements,backlog,writer,reviewer]" .-> O
@@ -81,6 +83,6 @@ flowchart TB
 
     %% ── Note connections ──────────────────────────────────────────
     INPUT -. "source document" .-> NOTE_IN
-    BS -. "existing backlog" .-> NOTE_BL
+    BL_IN -. "existing backlog" .-> NOTE_BL
     OUT -. "proposal" .-> NOTE_OUT
 
